@@ -56,7 +56,7 @@ class PacketRegistry:
         func = self._packet_map[base_packet.type]["func"]
         packet = clz(**payload)
         try:
-            packet.body = packet.__annotations__["body"](**packet.body)
+            packet.body = type(packet).__annotations__["body"](**packet.body)
         except Exception as e:
             logger.exception(e)
             return None  # Prevent processing packets with invalid body
